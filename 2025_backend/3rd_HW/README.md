@@ -7,6 +7,60 @@
 - 결과 화면
 <img width="1066" height="382" alt="image" src="https://github.com/user-attachments/assets/767d04df-c69b-4742-b706-be23ba9cc844" />
 
+### 3) 위의 결과를 위해 고친 파일
+#### a) com.demo.comentoStatistic.dto.YearCountDto.java
+```
+public class YearCountDto{
+  private Strig year;
+  private int totCnt;
+
+  public YearCountDto(String year, int totCnt){
+    this.year = year;
+    this.totCnt = totCnt;
+  }
+
+  public String getYear(){
+    return year;
+  }
+  public int getTotCnt(){
+    return totCnt;
+  }
+
+  public void setYear(Stirn year){
+    this.year = year;
+  }
+  public void setTotCnt(int totCnt){
+    this.totCnt = totCnt;
+  }
+}
+```
+#### b) com.demo.comentoStatistic.dto.YearMonthCountDto.java
+```
+public class YearMonthCountDto{
+  private String yearMonth;
+  private int totCnt;
+
+  public YearMonthCountDto(String yearMonth, int totCnt){
+    this.yearMonth = yearMonth;
+    this.totCnt = totCnt;
+  }
+
+  public String getYearMonth(){
+    return yearMonth;
+  }
+  public int getTotCnt(){
+    return totCnt;
+  }
+
+  public void setYearMonth(String yearMonth){
+    this.yearMonth = yearMonth;
+  }
+  public void setTotCnt(int totCnt){
+    this.totCnt = totCnt;
+  }
+}
+```
+
 ## 2. 4주차 과제에서 만들 API SQL문 작성
 ### 1) 월별 접속자 수
 ```
