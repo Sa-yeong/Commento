@@ -143,7 +143,7 @@ public class HoliService {
 <img width="1264" height="421" alt="image" src="https://github.com/user-attachments/assets/ccae4382-6f63-456e-82d8-67a07b7fcd64" />
 
 # 5. 부서별 월별 로그인 수
-## Return type : MontlyDepDto
+## Return type : MonthlyDepDto
 ```java
 private String yearMonth;
     private String dep;
