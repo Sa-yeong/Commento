@@ -17,7 +17,7 @@ public void setCount(int count){ this.count = count;}
 ```
 ## Mapper.xml
 ```xml
-<select id='selectMonthlyVisitor" parameterType="string" resultType="MonthlyVisitorDto">
+<select id="selectMonthlyVisitor" parameterType="string" resultType="MonthlyVisitorDto">
     select concat('20',#{year}, '-', temp.month) as yearMonth, Count(*) as count
     from (select substr(ri.create_date, 3, 2) as month
           from statistic.request_info ri
