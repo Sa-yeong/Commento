@@ -1,6 +1,6 @@
 # 1. 월별 접속자 수
 ## 리턴 타입 객체 : MonthlyVisitorDto
-```
+```java
 private String yearMonth;
 private int count;
 
@@ -16,9 +16,9 @@ public void setYearMonth(String yearMonth){ this.yearMonth = yearMonth;}
 public void setCount(int count){ this.count = count;}
 ```
 ## Mapper.xml
-```
+```xml
 <select id='selectMonthlyVisitor" parameterType="string" resultType="MonthlyVisitorDto">
-    select concat('20',#{year}, '-' temp.month) as yearMonth, Count(*) as count
+    select concat('20',#{year}, '-', temp.month) as yearMonth, Count(*) as count
     from (select substr(ri.create_date, 3, 2) as month
           from statistic.request_info ri
           where left(ri.create_date,2) = #{year}) temp
@@ -30,7 +30,7 @@ public void setCount(int count){ this.count = count;}
 
 # 2. 일자별 접속자 수 
 ## return Type : DailyVisitorDto
-```
+```java
 private String date;
     private int count;
 
@@ -47,7 +47,7 @@ private String date;
 ```
 
 ## Mapper.xml
-```
+```xml
 <select id="selectDailyVisitors" parameterType="string" resultType="DailyVisitorDto">
         select concat('20',left(#{yearMonth}, 2), '-', right(#{yearMonth}, 2), '-', temp.day) as date, count(*) as count
         from (select substr(ri.create_date, 5, 2) as day
@@ -60,8 +60,9 @@ private String date;
 <img width="1323" height="375" alt="image" src="https://github.com/user-attachments/assets/d33a2ec3-e8a6-4b53-b105-eff3a28c2e60" />
 
 # 3. 평균 하루 로그인 수
+편의상 월 평균 일수를 30일로 가정
 ## Return type: DailyAvgDto
-```
+```java
 private String yearMonth;
     private Float avgCount;
 
@@ -78,7 +79,7 @@ private String yearMonth;
 ```
 
 ## Mapper.xml
-```
+```xml
 <select id="selectDailyAvgLogins" parameterType="string" resultType="DailyAvgDto">
         select concat('20', #{year}, '-', temp.month) as yearMonth, temp.tot/30 as avgCount
         from (select substr(ri.create_date, 3, 2) as month, count(*) as tot
@@ -94,7 +95,7 @@ private String yearMonth;
 공공API를 이용해 공휴일 정보를 가져와서 활용
 ## Return type: 1번 문제와 동일
 ## HoliService.java
-```
+```java
 @Service
 public class HoliService {
     @Autowired
@@ -111,7 +112,7 @@ public class HoliService {
         List<String> resultLi = new ArrayList<>();
 
         if(holiApi!=null && holiApi.getResponse()!=null && holiApi.getResponse().getBody() !=null && holiApi.getResponse().getBody().getItems()!=null){
-            for(HoliApiDto.Item item : holiApi.getResponse().getBody().getItems().getitem()){
+            for(HoliApiDto.Item item : holiApi.getResponse().getBody().getItems().getItem()){
                 resultLi.add(item.getLocdate());
             }
         }
@@ -120,7 +121,7 @@ public class HoliService {
 }
 ```
 ## Mapper.xml
-```
+```xml
 <select id="selectExcludingHoliLogins" resultType="MonthlyVisitorDto">
         select concat('20', #{year}, '-', temp.month) as yearMonth, Count(*) as count
         from (select substr(ri.create_date, 3, 2) as month, right(ri.create_date,2) as day
@@ -143,7 +144,7 @@ public class HoliService {
 
 # 5. 부서별 월별 로그인 수
 ## Return type : MontlyDepDto
-```
+```java
 private String yearMonth;
     private String dep;
     private int count;
@@ -164,7 +165,7 @@ private String yearMonth;
 ```
 
 ## Mapper.xml
-```
+```xml
 <select id="selectMonthlyDepLogin" parameterType="String" resultType="MonthlyDepDto">
         select concat('20', #{year}, '-', temp.month) as yearMonth, temp.dep as dep, count(*) as count
         from (select substr(ri.create_date, 3, 2) as month, u.hr_organ as dep
